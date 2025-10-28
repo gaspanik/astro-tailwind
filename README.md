@@ -8,6 +8,7 @@
 - **[Tailwind CSS v4](https://tailwindcss.com)** - ユーティリティファーストのCSSフレームワーク
 - **[Biome](https://biomejs.dev)** - 高速なリンター・フォーマッター
 - **[pnpm](https://pnpm.io)** - 高速で効率的なパッケージマネージャー
+- **[Lucide (lucide-astro)](https://lucide.dev/guide/packages/lucide-astro)** - 軽量なオープンソースアイコンセット（Astro向けパッケージ）
 
 ## 🚀 プロジェクト構造
 
@@ -70,8 +71,26 @@ Astroプロジェクトの構造について詳しくは、[公式ガイド](htt
 
 3. ブラウザで `http://localhost:4321` を開いて確認
 
+### 🔣 Lucide Icons (lucide-astro)
+
+簡単な使用例（Astroコンポーネント内）:
+
+```astro
+---
+import { IconActivity } from 'lucide-astro';
+---
+
+<IconActivity class="w-6 h-6 text-blue-500" />
+```
+
+詳しくは公式ガイドを参照してください:
+
+- https://lucide.dev/guide/packages/lucide-astro
+
 ## 📚 参考資料
 
 - **[Astro](https://docs.astro.build/ja/)** - Astroの公式ドキュメント
 - **[Tailwind CSS](https://tailwindcss.com)** - Tailwind CSSの公式ドキュメント
 - **[Biome](https://biomejs.dev)** - Biomeの公式ドキュメント
+- **[Lucide](https://lucide.dev/guide/packages/lucide-astro)** - Lucideの公式ドキュメント
+
