@@ -1,46 +1,77 @@
-# Astro Starter Kit: Basics
+# Astro + Tailwind CSS + Biome
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+このプロジェクトは、Astroベースのスターターキットに **Tailwind CSS v4** と **Biome** を追加した開発環境です。
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🛠️ 技術スタック
 
-## 🚀 Project Structure
+- **[Astro](https://astro.build)** - モダンな静的サイトジェネレーター
+- **[Tailwind CSS v4](https://tailwindcss.com)** - ユーティリティファーストのCSSフレームワーク
+- **[Biome](https://biomejs.dev)** - 高速なリンター・フォーマッター
+- **[pnpm](https://pnpm.io)** - 高速で効率的なパッケージマネージャー
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🚀 プロジェクト構造
+
+プロジェクトの主要なフォルダとファイル:
 
 ```text
 /
-├── public/
-│   └── favicon.svg
-├── src
+├── public/                 # 静的アセット
+├── src/
 │   ├── assets
 │   │   └── astro.svg
 │   ├── components
 │   │   └── Welcome.astro
 │   ├── layouts
 │   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
+│   ├── pages
+│   │   └── index.astro
+│   └── styles
+│       └── global.css
+├── astro.config.mjs        # AstroとTailwind CSSの設定
+├── biome.json              # Biomeの設定
 └── package.json
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Astroプロジェクトの構造について詳しくは、[公式ガイド](https://docs.astro.build/ja/core-concepts/project-structure/)をご覧ください。
 
-## 🧞 Commands
+### 🎨 設定ファイル
 
-All commands are run from the root of the project, from a terminal:
+- **`astro.config.mjs`**: Astroの設定とTailwind CSS v4のViteプラグイン設定
+- **`biome.json`**: リンター・フォーマッターの設定
+- **`src/styles/global.css`**: Tailwind CSSのインポート
 
-| Command                   | Action                                           |
+## 🧞 コマンド
+
+すべてのコマンドは、プロジェクトルートディレクトリから実行してください：
+
+| コマンド                    | アクション                                         |
 | :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+| `pnpm install`            | 依存関係をインストール                               |
+| `pnpm dev`                | 開発サーバーを `localhost:4321` で起動              |
+| `pnpm build`              | 本番用サイトを `./dist/` にビルド                    |
+| `pnpm preview`            | ローカルでビルド結果をプレビュー                      |
+| `pnpm lint`               | Biomeでソースコードをリント                         |
+| `pnpm format`             | Biomeでソースコードをフォーマット                    |
+| `pnpm check`              | Biomeでコードをチェック・自動修正                    |
+| `pnpm astro ...`          | Astro CLIコマンド（例：`astro add`, `astro check`） |
+| `pnpm astro -- --help`   | Astro CLIのヘルプを表示                           |
 
-## 👀 Want to learn more?
+## � 開始方法
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+1. 依存関係をインストール:
+   ```bash
+   pnpm install
+   ```
+
+2. 開発サーバーを起動:
+   ```bash
+   pnpm dev
+   ```
+
+3. ブラウザで `http://localhost:4321` を開いて確認
+
+## 📚 参考資料
+
+- **[Astro](https://docs.astro.build/ja/)** - Astroの公式ドキュメント
+- **[Tailwind CSS](https://tailwindcss.com)** - Tailwind CSSの公式ドキュメント
+- **[Biome](https://biomejs.dev)** - Biomeの公式ドキュメント
