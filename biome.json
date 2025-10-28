@@ -36,9 +36,7 @@
   },
   "css": {
     "parser": { "tailwindDirectives": true },
-    "formatter": { "enabled": true, "quoteStyle": "double" },
-    "linter": null,
-    "assist": null
+    "formatter": { "enabled": true, "quoteStyle": "double" }
   },
   "html": {
     "experimentalFullSupportEnabled": true,
