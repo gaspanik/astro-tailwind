@@ -118,3 +118,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# MISE private settings
+mise.local.toml

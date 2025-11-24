@@ -7,9 +7,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "biome lint src",
-    "format": "biome format src",
-    "check": "biome check src --write"
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --write"
   },
   "dependencies": {
     "@lucide/astro": "^0.554.0",
