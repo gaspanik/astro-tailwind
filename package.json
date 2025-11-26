@@ -12,9 +12,9 @@
     "check": "biome check --write"
   },
   "dependencies": {
-    "@lucide/astro": "^0.554.0",
+    "@lucide/astro": "^0.555.0",
     "@tailwindcss/vite": "^4.1.17",
-    "astro": "^5.16.0",
+    "astro": "^5.16.1",
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
