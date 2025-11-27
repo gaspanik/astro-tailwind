@@ -1,10 +1,16 @@
 ---
-import { SquareDashed } from '@lucide/astro'
+import { RocketIcon } from "@lucide/astro";
 ---
-<div class="flex flex-col justify-center items-center bg-gray-100 min-h-screen">
-  <div class="flex items-center gap-2 mt-4">
-    <SquareDashed class="w-6 h-6" />
-    <h1 class="font-semibold text-2xl">Hello world!</h1>
+
+<div class="flex flex-col justify-center bg-gray-50 min-h-screen align-center">
+  <div class="flex flex-col items-start mx-auto">
+    <div class="flex items-center gap-2 mt-4">
+      <RocketIcon class="w-6 h-6" />
+      <h1 class="font-medium text-2xl">Hello astro!</h1>
+    </div>
+    <p class="mt-2 text-gray-600">
+      Welcome to your new Astro project with Tailwind CSS.
+    </p>
   </div>
 </div>
 
