@@ -13,6 +13,10 @@ description = "Preview the build"
 run = "pnpm preview"
 depends = ["astro:build"]
 
+[tasks."astro:upgrade"]
+description = "Upgrade Astro to the latest version"
+run = "pnpx @astrojs/upgrade"
+
 [tasks."biome:format"]
 confirm = "Are you sure you want to format the code?"
 description = "Format the codebase using Biome"
