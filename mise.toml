@@ -16,6 +16,10 @@ depends = ["astro:build"]
 [tasks."astro:upgrade"]
 description = "Upgrade Astro to the latest version"
 run = "pnpx @astrojs/upgrade"
+[tasks."astro:check"]
+confirm = "Are you sure you want to format and lint the code?"
+description = "Format and lint the codebase using Biome"
+run = "pnpm check"
 
 [tasks."biome:format"]
 confirm = "Are you sure you want to format the code?"
@@ -25,7 +29,3 @@ run = "pnpm format ./src"
 confirm = "Are you sure you want to lint the code?"
 description = "Lint the codebase using Biome"
 run = "pnpm lint ./src"
-[tasks."biome:check"]
-confirm = "Are you sure you want to format and lint the code?"
-description = "Format and lint the codebase using Biome"
-run = "pnpm check ./src"
