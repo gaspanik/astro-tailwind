@@ -17,8 +17,7 @@ depends = ["astro:build"]
 description = "Upgrade Astro to the latest version"
 run = "pnpx @astrojs/upgrade"
 [tasks."astro:check"]
-confirm = "Are you sure you want to format and lint the code?"
-description = "Format and lint the codebase using Biome"
+description = "Run astro check"
 run = "pnpm check"
 
 [tasks."biome:format"]
