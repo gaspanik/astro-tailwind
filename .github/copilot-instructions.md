@@ -2,7 +2,7 @@
 
 ## Architecture Overview
 
-This is an Astro static site project using **Tailwind CSS v4** (latest version with Vite plugin), Biome for linting/formatting, and Lucide for icons. The project is Japanese-focused with Noto Sans JP as the default font.
+This is an Astro static site project using **Tailwind CSS v4** (latest version with Vite plugin), Biome for linting/formatting, and Lucide for icons via `@lucide/astro` package. The project is Japanese-focused with Noto Sans JP as the default font.
 
 ### Key Technology Decisions
 
@@ -17,31 +17,36 @@ This is an Astro static site project using **Tailwind CSS v4** (latest version w
 
 - **Formatting**: 2-space indent, 80-char line width, single quotes for JS, double quotes for JSX/CSS
 - **JavaScript**: Trailing commas everywhere, semicolons only when needed (`asNeeded`)
-- **Astro files**: Unused imports/variables allowed (disable `noUnusedImports`, `noUnusedVariables`)
 - **CSS**: Tailwind directives parsing enabled
+- **HTML**: Experimental full support enabled, self-closing void elements always
+- **Organize imports**: Disabled (`organizeImports: "off"`)
 
 ### Component Patterns
 
 **Layout Structure** (`src/layouts/Layout.astro`):
 - Import `../styles/global.css` for Tailwind
-- Include Noto Sans JP from Google Fonts
-- Reset margin/padding in scoped `<style>` tags
-- Accept `title` prop with default value
+- Google Fonts imported in `global.css` (Noto Sans JP with 400-700 weights)
+- Reset margin/padding/width/height in scoped `<style>` tags
+- Accept `title` prop with default value `'Astro Basics w/ Tailwind CSS'`
 
 **Component Example** (`src/components/Welcome.astro`):
 ```astro
 ---
-import { SquareDashed } from '@lucide/astro'
+import { RocketIcon } from '@lucide/astro'
 ---
-<div class="flex flex-col justify-center items-center bg-gray-100 min-h-screen">
-  <div class="flex items-center gap-2 mt-4">
-    <SquareDashed class="w-6 h-6" />
-    <h1 class="font-semibold text-2xl">Hello world!</h1>
+<div class="flex flex-col justify-center bg-gray-50 min-h-screen align-center">
+  <div class="flex flex-col items-start mx-auto">
+    <div class="flex items-center gap-2 mt-4">
+      <RocketIcon class="w-6 h-6" />
+      <h1 class="font-medium text-2xl">Hello astro!</h1>
+    </div>
   </div>
 </div>
 ```
 
-**Icons**: Use `@lucide/astro` imports, not `lucide-react`. Apply Tailwind classes directly to icon components.
+**Icons**: CRITICAL - Always use `@lucide/astro` for imports (e.g., `import { RocketIcon } from '@lucide/astro'`). Never use `lucide-astro` or `lucide-react`. Apply Tailwind classes directly to icon components.
+
+**Page Pattern** (`src/pages/index.astro`): Import components and layouts, wrap components in Layout
 
 ## Development Workflows
 
@@ -49,19 +54,32 @@ import { SquareDashed } from '@lucide/astro'
 
 - **Dev server**: `pnpm dev` (localhost:4321)
 - **Build**: `pnpm build` → `./dist/`
-- **Code quality**: `pnpm check` (lint + format + fix in one command)
-- **Mise tasks**: `mise run astro:dev`, `mise run biome:check` (with confirmation prompts)
+- **Preview**: `pnpm preview` (preview production build)
+- **Check**: `pnpm check` (runs `astro check` for TypeScript validation)
+- **Lint**: `pnpm lint` (runs `biome lint --write`)
+- **Format**: `pnpm format` (runs `biome format --write`)
+
+### Mise Task Shortcuts
+
+Available via `mise run <task>` (requires confirmation for destructive operations):
+- `astro:dev` - Start dev server
+- `astro:build` - Build project (with confirmation)
+- `astro:preview` - Preview build (auto-runs build first)
+- `astro:upgrade` - Upgrade Astro via `pnpx @astrojs/upgrade`
+- `astro:check` - Run Astro TypeScript check
+- `biome:format` - Format src/ (with confirmation)
+- `biome:lint` - Lint src/ (with confirmation)
 
 ### Adding Dependencies
 
-Use `pnpm add <package>` (not npm/yarn). For build-heavy packages (esbuild, sharp), they're already configured in `pnpm-workspace.yaml` to only build dependencies.
+Use `pnpm add <package>` (not npm/yarn). For build-heavy packages (esbuild, sharp), they're already configured in `pnpm-workspace.yaml` with `onlyBuiltDependencies` to optimize installation.
 
 ### Creating New Components
 
 1. Place in `src/components/` with `.astro` extension
-2. Import Lucide icons from `@lucide/astro`
+2. Import Lucide icons from `@lucide/astro` (NOT `lucide-astro`)
 3. Use Tailwind utility classes directly (no CSS modules)
-4. Run `pnpm check` before committing to auto-fix formatting
+4. Run `pnpm check` for TypeScript validation, `pnpm lint` and `pnpm format` for code quality
 
 ### TypeScript Configuration
 
@@ -72,21 +90,24 @@ Use `pnpm add <package>` (not npm/yarn). For build-heavy packages (esbuild, shar
 ## Common Pitfalls
 
 - **Don't** use PostCSS config files - Tailwind v4 uses Vite plugin only
-- **Don't** import Lucide from `lucide-react` - use `@lucide/astro`
+- **Don't** import Lucide from `lucide-astro` or `lucide-react` - ALWAYS use `@lucide/astro` (the correct package for this project)
 - **Don't** run ESLint/Prettier - use Biome commands exclusively
-- **Don't** format Astro files with external formatters - Biome handles it with special rules
 - **Don't** add semicolons everywhere - Biome uses `asNeeded` mode
+- **Don't** import Google Fonts in Layout - already imported in `global.css`
+- **Don't** organize imports automatically - Biome has this disabled
 
 ## Integration Points
 
 - **Vite**: Tailwind CSS v4 plugin configured in `astro.config.mjs`
 - **Git**: Biome respects `.gitignore` via `vcs.useIgnoreFile: true`
-- **Fonts**: Google Fonts linked in `Layout.astro` (Noto Sans JP for Japanese support)
+- **Fonts**: Google Fonts imported in `src/styles/global.css` (Noto Sans JP for Japanese support)
+- **TypeScript**: Strict mode via Astro's tsconfig presets
 
 ## File Organization
 
 - Pages → `src/pages/` (Astro file-based routing)
 - Components → `src/components/` (reusable `.astro` components)
 - Layouts → `src/layouts/` (page templates)
-- Styles → `src/styles/global.css` (Tailwind imports only)
+- Styles → `src/styles/global.css` (Google Fonts + Tailwind imports only)
 - Static assets → `public/` (served as-is)
+- Assets → `src/assets/` (processed assets like images/SVGs)

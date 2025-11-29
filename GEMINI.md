@@ -1,104 +1,78 @@
-# Project Design System Rules
+# Project Context: Astro + Tailwind CSS v4
 
-This document outlines the architectural and stylistic rules for integrating designs into this codebase, specifically tailored for Astro with Tailwind CSS v4.
+## 1. Project Overview
 
-## 1. Design System Structure
+This project is a static site generator built with **Astro**, styled using **Tailwind CSS v4**, and maintained with **Biome** for linting and formatting. It serves as a modern, performance-focused web application foundation.
 
-### Token Definitions
-*   **Source of Truth:** Tailwind CSS v4 Default Theme.
-*   **Configuration:** No custom `tailwind.config.js` exists. Tokens are derived strictly from Tailwind's defaults.
-*   **Typography:**
-    *   **Font Family:** `Noto Sans JP` (imported in `src/styles/global.css`).
-    *   **Weights:** 400 (Regular) - 700 (Bold).
-*   **Colors:** Standard Tailwind palette (e.g., `gray-50`, `gray-600`).
-*   **Spacing:** Standard Tailwind spacing scale (e.g., `mt-4` = 1rem, `gap-2` = 0.5rem).
+### Key Technologies
+*   **Framework:** [Astro](https://astro.build) (v5.x)
+*   **Styling:** [Tailwind CSS v4](https://tailwindcss.com) (via `@tailwindcss/vite`)
+*   **Linting & Formatting:** [Biome](https://biomejs.dev)
+*   **Package Manager:** `pnpm`
+*   **Icons:** [Lucide](https://lucide.dev/guide/packages/lucide-astro) (`@lucide/astro`)
 
-**Code Snippet (`src/styles/global.css`):**
-```css
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400-700&display=swap');
-@import "tailwindcss";
-```
+## 2. Building and Running
 
-## 2. Component Library
+All commands are run via `pnpm`.
 
-*   **Definition:** UI components are defined as `.astro` files in `src/components/`.
-*   **Architecture:**
-    *   **Single File Components:** Script (frontmatter), Template (HTML), and Styles (optional scoped CSS) are in one file.
-    *   **Props:** Defined in the component frontmatter (TypeScript interface recommended).
-*   **Usage:** Imported and used directly in pages or layouts.
+### Core Commands
+*   **Install Dependencies:** `pnpm install`
+*   **Start Development Server:** `pnpm dev` (Runs on `http://localhost:4321`)
+*   **Build for Production:** `pnpm build` (Output to `./dist/`)
+*   **Preview Production Build:** `pnpm preview`
 
-**Code Snippet (`src/components/Welcome.astro`):**
-```astro
----
-import { RocketIcon } from '@lucide/astro'
-// Props definition (if needed)
-// interface Props { title: string; }
----
+### Quality Assurance
+*   **Lint Code:** `pnpm lint` (Runs `biome lint --write`)
+*   **Format Code:** `pnpm format` (Runs `biome format --write`)
+*   **Type Check:** `pnpm check` (Runs `astro check`)
 
-<div class="flex flex-col ...">
-  <RocketIcon class="w-6 h-6" />
-  <!-- Content -->
-</div>
-```
+## 3. Development Conventions
 
-## 3. Frameworks & Libraries
+### File Structure
+*   `src/pages/`: File-based routing. Each `.astro` file becomes a route.
+*   `src/components/`: Reusable UI components.
+*   `src/layouts/`: Wrapper components for pages (e.g., `Layout.astro` defines `<head>` and `<body>`).
+*   `src/styles/`: Global styles (e.g., `global.css` for font imports and Tailwind directives).
+*   `src/assets/`: Optimized assets (images, SVGs).
 
-*   **Core Framework:** [Astro](https://astro.build)
-*   **Styling Engine:** [Tailwind CSS v4](https://tailwindcss.com)
-*   **Icon Library:** [Lucide Icons (Astro)](https://lucide.dev/guide/packages/lucide-astro)
-*   **Package Manager:** pnpm
-*   **Build Tool:** Vite (internal to Astro)
+### Design System Rules
 
-## 4. Asset Management
+#### Typography
+*   **Font Family:** `Noto Sans JP` (Imported in `src/styles/global.css`).
+*   **Base Style:** Applied globally in `src/layouts/Layout.astro`:
+    ```css
+    html, body {
+      font-family: "Noto Sans JP", sans-serif;
+    }
+    ```
 
-*   **Processed Assets (`src/assets/`):**
-    *   Images and vectors that require optimization or bundling should be placed here.
-    *   Import them in Astro files: `import logo from '../assets/logo.svg';`
-*   **Static Assets (`public/`):**
-    *   Files that should be served as-is (e.g., `favicon.svg`, `robots.txt`).
-    *   Referenced via root-relative paths: `<img src="/favicon.svg" />`
+#### Styling (Tailwind CSS v4)
+*   **Configuration:** Uses zero-config Tailwind v4. No `tailwind.config.js`.
+*   **Directives:** `@import "tailwindcss";` in `src/styles/global.css`.
+*   **Approach:** Utility-first. Use classes directly in markup.
+*   **Responsive:** Use standard prefixes (`md:`, `lg:`, etc.).
 
-## 5. Icon System
+#### Icons
+*   **Library:** `@lucide/astro`.
+*   **Usage:** Import components directly.
+    ```astro
+    import { RocketIcon } from '@lucide/astro';
+    <RocketIcon class="w-6 h-6 text-blue-500" />
+    ```
 
-*   **Library:** `@lucide/astro`
-*   **Usage:** Import specific icons as components.
-*   **Styling:** Style icons using Tailwind classes via the `class` prop (size, color, margin).
+### Coding Style (Biome)
+*   **Indentation:** 2 spaces.
+*   **Quotes:** Single quotes for JavaScript/TypeScript.
+*   **Semicolons:** As needed (avoid excessive usage where automatic insertion works safely, but follow Biome's specific rules).
+*   **Imports:** Organized automatically by Biome.
 
-**Example:**
-```astro
-import { HomeIcon } from '@lucide/astro';
+### Component Architecture
+*   **Astro Components:** Prefer `.astro` files.
+    *   **Frontmatter:** TypeScript interface for Props.
+    *   **Template:** HTML with JSX-like expressions.
+    *   **Styles:** Scoped `<style>` blocks are permitted but prefer Tailwind utilities.
 
-<HomeIcon class="w-5 h-5 text-gray-600" />
-```
-
-## 6. Styling Approach
-
-*   **Methodology:** Utility-first (Tailwind CSS).
-*   **Global Styles:** Minimal. Defined in `src/styles/global.css` (imports fonts and Tailwind).
-*   **Component Styles:**
-    *   **Primary:** Use Tailwind utility classes directly in HTML (`class="..."`).
-    *   **Secondary (if needed):** Use `<style>` tag within `.astro` files for complex or scoped overrides.
-*   **Responsive Design:** Use Tailwind's responsive prefixes (`md:`, `lg:`, etc.).
-
-## 7. Project Structure
-
-```text
-/
-├── src/
-│   ├── assets/        # Optimized assets (images, svgs)
-│   ├── components/    # Reusable UI components (.astro)
-│   ├── layouts/       # Page layouts (wrappers)
-│   ├── pages/         # File-based routing endpoints
-│   └── styles/        # Global CSS (global.css)
-├── public/            # Static assets
-├── astro.config.mjs   # Framework config
-└── package.json       # Dependencies
-```
-
-## Integration Checklist for New Designs
-
-1.  [ ] **Check Tokens:** Does the design use standard Tailwind colors/spacing? If not, map to the closest Tailwind utility or extend the theme (requires creating a config).
-2.  [ ] **Identify Components:** Break down the design into reusable Astro components.
-3.  [ ] **Assets:** Export images to `src/assets` (if optimization needed) or `public`.
-4.  [ ] **Icons:** Find the matching icon in Lucide. Do not export SVGs from Figma if a Lucide equivalent exists.
-5.  [ ] **Layout:** Implement using Flexbox/Grid utilities (`flex`, `grid`, `gap-*`).
+## 4. Configuration Files
+*   **`astro.config.mjs`:** Main Astro config. Includes `tailwindcss()` Vite plugin.
+*   **`biome.json`:** Rules for linter and formatter.
+*   **`package.json`:** Scripts and dependencies.
