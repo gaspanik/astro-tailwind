@@ -44,6 +44,19 @@ import { RocketIcon } from '@lucide/astro'
 </div>
 ```
 
+**Tailwind CSS v4 Class Names**: CRITICAL - This project uses Tailwind CSS v4 with NEW syntax. Always use the v4 format:
+- ✅ `text-2xl` (correct v4 syntax)
+- ❌ `text-[2rem]` (avoid arbitrary values unless necessary)
+- ✅ `bg-gray-50` (use semantic color scale)
+- ❌ `bg-gray-100/50` (old opacity syntax - use `bg-gray-50` instead)
+- ✅ Standard utility classes work the same in v4
+
+Key v4 changes to remember:
+- Import Tailwind with `@import "tailwindcss"` (not `@tailwind base/components/utilities`)
+- Use semantic spacing/sizing (existing utilities work the same)
+- Avoid arbitrary values `[]` unless absolutely necessary
+- Use standard color scales (`gray-50`, `blue-500`, etc.)
+
 **Icons**: CRITICAL - Always use `@lucide/astro` for imports (e.g., `import { RocketIcon } from '@lucide/astro'`). Never use `lucide-astro` or `lucide-react`. Apply Tailwind classes directly to icon components.
 
 **Page Pattern** (`src/pages/index.astro`): Import components and layouts, wrap components in Layout
@@ -55,8 +68,8 @@ import { RocketIcon } from '@lucide/astro'
 - **Dev server**: `pnpm dev` (localhost:4321)
 - **Build**: `pnpm build` → `./dist/`
 - **Preview**: `pnpm preview` (preview production build)
-- **Check**: `pnpm check` (runs `astro check` for TypeScript validation)
-- **Lint**: `pnpm lint` (runs `biome lint --write`)
+- **Check**: `pnpm check` (runs `astro check` for TypeScript validation including `.astro` files)
+- **Lint**: `pnpm lint` (runs `biome lint --write` - note: Biome does not check `.astro` files)
 - **Format**: `pnpm format` (runs `biome format --write`)
 
 ### Mise Task Shortcuts
@@ -79,7 +92,7 @@ Use `pnpm add <package>` (not npm/yarn). For build-heavy packages (esbuild, shar
 1. Place in `src/components/` with `.astro` extension
 2. Import Lucide icons from `@lucide/astro` (NOT `lucide-astro`)
 3. Use Tailwind utility classes directly (no CSS modules)
-4. Run `pnpm check` for TypeScript validation, `pnpm lint` and `pnpm format` for code quality
+4. Run `pnpm check` for TypeScript validation (including `.astro` files), `pnpm lint` and `pnpm format` for JS/TS/CSS quality
 
 ### TypeScript Configuration
 
@@ -90,6 +103,8 @@ Use `pnpm add <package>` (not npm/yarn). For build-heavy packages (esbuild, shar
 ## Common Pitfalls
 
 - **Don't** use PostCSS config files - Tailwind v4 uses Vite plugin only
+- **Don't** use old Tailwind import syntax (`@tailwind base;` etc.) - use `@import "tailwindcss"` in CSS files
+- **Don't** use arbitrary values excessively (e.g., `text-[2rem]`) - prefer standard utilities in v4
 - **Don't** import Lucide from `lucide-astro` or `lucide-react` - ALWAYS use `@lucide/astro` (the correct package for this project)
 - **Don't** run ESLint/Prettier - use Biome commands exclusively
 - **Don't** add semicolons everywhere - Biome uses `asNeeded` mode

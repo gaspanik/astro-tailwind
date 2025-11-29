@@ -53,7 +53,7 @@ Astroプロジェクトの構造について詳しくは、[公式ガイド](htt
 | `pnpm preview`            | ローカルでビルド結果をプレビュー                      |
 | `pnpm lint`               | Biomeでソースコードをリント                         |
 | `pnpm format`             | Biomeでソースコードをフォーマット                    |
-| `pnpm check`              | Biomeでコードをチェック・自動修正                    |
+| `pnpm check`              | Astro checkでTypeScript検証（`.astro`ファイル含む） |
 | `pnpm astro ...`          | Astro CLIコマンド（例：`astro add`, `astro check`） |
 | `pnpm astro -- --help`   | Astro CLIのヘルプを表示                           |
 
