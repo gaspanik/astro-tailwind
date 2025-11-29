@@ -72,6 +72,16 @@ All commands are run via `pnpm`.
     *   **Template:** HTML with JSX-like expressions.
     *   **Styles:** Scoped `<style>` blocks are permitted but prefer Tailwind utilities.
 
+### Common Pitfalls
+* **Don't** use PostCSS config files - Tailwind v4 uses Vite plugin only
+* **Don't** use old Tailwind import syntax (`@tailwind base;` etc.) - use `@import "tailwindcss"` in CSS files
+* **Don't** use arbitrary values excessively (e.g., `text-[2rem]`) - prefer standard utilities in v4
+* **Don't** import Lucide from `lucide-astro` or `lucide-react` - ALWAYS use `@lucide/astro` (the correct package for this project)
+* **Don't** run ESLint/Prettier - use Biome commands exclusively
+* **Don't** add semicolons everywhere - Biome uses `asNeeded` mode
+* **Don't** import Google Fonts in Layout - already imported in `global.css`
+* **Don't** organize imports automatically - Biome has this disabled
+
 ## 4. Configuration Files
 *   **`astro.config.mjs`:** Main Astro config. Includes `tailwindcss()` Vite plugin.
 *   **`biome.json`:** Rules for linter and formatter.
