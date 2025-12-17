@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { SquareCode } from "@lucide/astro";
+---
+
+<Layout>
+  <div
+    class="flex flex-col justify-center bg-gray-50 min-h-screen align-center"
+  >
+    <div class="flex flex-col items-start mx-auto">
+      <div class="flex items-center gap-2 mt-4">
+        <SquareCode class="w-6 h-6" />
+        <h1 class="font-normal text-xl">This is the about page.</h1>
+      </div>
+      <p class="mt-1 text-gray-600 text-sm">
+        <a class="text-pink-700" href="/">Back</a> to the homepage.
+      </p>
+    </div>
+  </div>
+</Layout>
