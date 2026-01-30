@@ -11,6 +11,22 @@ This is an Astro static site project using **Tailwind CSS v4** (latest version w
 - **pnpm**: Package manager with workspace configuration (`pnpm-workspace.yaml` optimizes esbuild/sharp builds)
 - **mise**: Development environment manager (Node 24) with task runner shortcuts
 
+### Using MCP Servers for Latest Documentation
+
+**IMPORTANT**: When writing or modifying code, ALWAYS use the available MCP servers to verify current best practices and syntax:
+
+- **Astro MCP Server** (`mcp_astro_mcp_search_astro_docs`): Use to verify Astro component patterns, props, layouts, routing, and API usage
+- **Tailwind CSS MCP Server** (`mcp_tailwindcss_m_search_tailwind_docs`, `mcp_tailwindcss_m_get_tailwind_utilities`): Use to verify utility classes, configuration, and v4-specific features
+
+When to use MCP servers:
+1. Before implementing new Astro components or layouts
+2. When uncertain about Tailwind CSS class names or configuration
+3. When implementing file-based routing or dynamic routes
+4. Before using Astro APIs like `Astro.props`, `Astro.glob()`, or `getStaticPaths()`
+5. When troubleshooting or debugging issues
+
+Always prioritize MCP server documentation over assumptions to ensure code follows the latest standards.
+
 ## Code Style & Conventions
 
 ### Biome Configuration (`biome.json`)
@@ -27,39 +43,57 @@ This is an Astro static site project using **Tailwind CSS v4** (latest version w
 - Import `../styles/global.css` for Tailwind
 - Google Fonts imported in `global.css` (Noto Sans JP with 400-700 weights)
 - Reset margin/padding/width/height in scoped `<style>` tags
-- Accept `title` prop with default value `'Astro Basics w/ Tailwind CSS'`
+- Accept `title` prop with default value using TypeScript interface
+- Layouts provide a page shell (`<html>`, `<head>`, `<body>` tags) and a `<slot />` for page content
+- Can be nested: child layouts can import and wrap content in parent layouts
 
 **Component Example** (`src/components/Welcome.astro`):
 ```astro
 ---
 import { RocketIcon } from '@lucide/astro'
 ---
-<div class="flex flex-col justify-center bg-gray-50 min-h-screen align-center">
+<div class="flex flex-col justify-center items-center bg-gray-50 min-h-screen">
   <div class="flex flex-col items-start mx-auto">
     <div class="flex items-center gap-2 mt-4">
       <RocketIcon class="w-6 h-6" />
-      <h1 class="font-medium text-2xl">Hello astro!</h1>
+      <h1 class="text-2xl font-medium">Hello astro!</h1>
     </div>
   </div>
 </div>
 ```
 
+**Component Script**:
+- Use code fence (`---`) for frontmatter script at the top of `.astro` files
+- Access props via `Astro.props` (e.g., `const { title } = Astro.props`)
+- Use TypeScript interfaces for type-safe props (e.g., `interface Props { title: string }`)
+- Import other components, data files, fetch external data in the script section
+- Variables defined in script are available in template using JSX-like expressions `{variable}`
+
 **Tailwind CSS v4 Class Names**: CRITICAL - This project uses Tailwind CSS v4 with NEW syntax. Always use the v4 format:
 - ✅ `text-2xl` (correct v4 syntax)
 - ❌ `text-[2rem]` (avoid arbitrary values unless necessary)
 - ✅ `bg-gray-50` (use semantic color scale)
-- ❌ `bg-gray-100/50` (old opacity syntax - use `bg-gray-50` instead)
 - ✅ Standard utility classes work the same in v4
+- ✅ Import via `@import "tailwindcss"` in CSS files (NOT `@tailwind base/components/utilities`)
+- ✅ Use `@tailwindcss/vite` plugin in Vite configuration, not PostCSS
 
 Key v4 changes to remember:
-- Import Tailwind with `@import "tailwindcss"` (not `@tailwind base/components/utilities`)
+- Import syntax: `@import "tailwindcss"` in CSS files
+- Vite plugin: `import tailwindcss from '@tailwindcss/vite'` in config
 - Use semantic spacing/sizing (existing utilities work the same)
 - Avoid arbitrary values `[]` unless absolutely necessary
 - Use standard color scales (`gray-50`, `blue-500`, etc.)
+- Modifiers work with `:` syntax (e.g., `hover:`, `focus:`, `dark:`, `md:`, `lg:`)
 
 **Icons**: CRITICAL - Always use `@lucide/astro` for imports (e.g., `import { RocketIcon } from '@lucide/astro'`). Never use `lucide-astro` or `lucide-react`. Apply Tailwind classes directly to icon components.
 
-**Page Pattern** (`src/pages/index.astro`): Import components and layouts, wrap components in Layout
+**Page Pattern** (`src/pages/index.astro`): 
+- Import components and layouts, wrap components in Layout
+- Pages in `src/pages/` are automatically routed by Astro (file-based routing)
+- `src/pages/index.astro` → `/` route
+- `src/pages/about.astro` → `/about` route
+- Dynamic routes use `[param].astro` syntax (e.g., `[id].astro`)
+- Prefix with `_` to exclude from routing (e.g., `_helper.astro`)
 
 ## Development Workflows
 

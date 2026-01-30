@@ -11,6 +11,20 @@ This project is a static site generator built with **Astro**, styled using **Tai
 *   **Package Manager:** `pnpm`
 *   **Icons:** [Lucide](https://lucide.dev/guide/packages/lucide-astro) (`@lucide/astro`)
 
+### Using MCP Servers for Latest Documentation
+
+**IMPORTANT**: When writing or modifying code, ALWAYS use the available MCP servers to verify current best practices and syntax:
+
+*   **Astro MCP Server** (`mcp_astro_mcp_search_astro_docs`): Verify Astro component patterns, props, layouts, routing, and API usage.
+*   **Tailwind CSS MCP Server** (`mcp_tailwindcss_m_search_tailwind_docs`, `mcp_tailwindcss_m_get_tailwind_utilities`): Verify utility classes, configuration, and v4-specific features.
+
+**When to use:**
+1.  Before implementing new Astro components or layouts.
+2.  When uncertain about Tailwind CSS class names or configuration.
+3.  When implementing file-based routing or dynamic routes.
+4.  Before using Astro APIs like `Astro.props`, `Astro.glob()`, or `getStaticPaths()`.
+5.  When troubleshooting or debugging issues.
+
 ## 2. Building and Running
 
 All commands are run via `pnpm`.
@@ -20,6 +34,15 @@ All commands are run via `pnpm`.
 *   **Start Development Server:** `pnpm dev` (Runs on `http://localhost:4321`)
 *   **Build for Production:** `pnpm build` (Output to `./dist/`)
 *   **Preview Production Build:** `pnpm preview`
+
+### Mise Task Shortcuts
+*   `mise run astro:dev` - Start dev server
+*   `mise run astro:build` - Build project (with confirmation)
+*   `mise run astro:preview` - Preview build
+*   `mise run astro:upgrade` - Upgrade Astro
+*   `mise run astro:check` - Run Astro TypeScript check
+*   `mise run biome:format` - Format src/
+*   `mise run biome:lint` - Lint src/
 
 ### Quality Assurance
 *   **Lint Code:** `pnpm lint` (Runs `biome lint --write`)
@@ -64,7 +87,7 @@ All commands are run via `pnpm`.
 *   **Indentation:** 2 spaces.
 *   **Quotes:** Single quotes for JavaScript/TypeScript.
 *   **Semicolons:** As needed (avoid excessive usage where automatic insertion works safely, but follow Biome's specific rules).
-*   **Imports:** Organized automatically by Biome.
+*   **Imports:** Organize imports is disabled (`organizeImports: "off"`).
 
 ### Component Architecture
 *   **Astro Components:** Prefer `.astro` files.
